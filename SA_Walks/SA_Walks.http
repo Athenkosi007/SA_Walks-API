@@ -1,0 +1,6 @@
+@SA_Walks_HostAddress = http://localhost:5053
+
+GET {{SA_Walks_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
