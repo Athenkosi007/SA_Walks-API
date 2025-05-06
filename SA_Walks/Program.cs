@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using SA_Walks.API.Data;
+using SA_Walks.API.Repositories;
 
 namespace SA_Walks
 {
@@ -22,7 +23,8 @@ namespace SA_Walks
             builder.Services.AddDbContext<SA_WalksDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnString")!));
 
-
+            //Injecting the interface with the implementation SQLRegionRepository
+            builder.Services.AddScoped<IRegionRepository, SQLRegionRepository>();
 
             var app = builder.Build();
 
