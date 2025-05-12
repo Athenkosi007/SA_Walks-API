@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using SA_Walks.API.Data;
+using SA_Walks.API.Mappings;
 using SA_Walks.API.Repositories;
 
 namespace SA_Walks
@@ -25,6 +26,13 @@ namespace SA_Walks
 
             //Injecting the interface with the implementation SQLRegionRepository
             builder.Services.AddScoped<IRegionRepository, SQLRegionRepository>();
+
+            //Injecting the interface with the implementation InMemoryRegionRepository (in memory data source)
+            //builder.Services.AddScoped<IRegionRepository, InMemoryRegionRepository>();
+
+
+            //Adding AutoMapper
+            builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
             var app = builder.Build();
 
