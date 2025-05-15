@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SA_Walks.API.Data;
 
@@ -11,9 +12,10 @@ using SA_Walks.API.Data;
 namespace SA_Walks.API.Migrations
 {
     [DbContext(typeof(SA_WalksDbContext))]
-    partial class SA_WalksDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250513134457_Fixing Walk Navigator Properties")]
+    partial class FixingWalkNavigatorProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

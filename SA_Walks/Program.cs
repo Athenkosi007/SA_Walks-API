@@ -22,10 +22,13 @@ namespace SA_Walks
             //builder.Services.AddDbContext<SA_WalksDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConnString")));
 
             builder.Services.AddDbContext<SA_WalksDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnString")!));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("ConnString")!));
 
             //Injecting the interface with the implementation SQLRegionRepository
             builder.Services.AddScoped<IRegionRepository, SQLRegionRepository>();
+
+            //Injecting the interface with the implementation SQLWalkRepository
+            builder.Services.AddScoped<IWalkRepository, SQLWalkRepository>();
 
             //Injecting the interface with the implementation InMemoryRegionRepository (in memory data source)
             //builder.Services.AddScoped<IRegionRepository, InMemoryRegionRepository>();

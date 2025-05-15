@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SA_Walks.API.Data;
 
@@ -11,9 +12,10 @@ using SA_Walks.API.Data;
 namespace SA_Walks.API.Migrations
 {
     [DbContext(typeof(SA_WalksDbContext))]
-    partial class SA_WalksDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250512185655_Seeding Data for Difficulties and Regions")]
+    partial class SeedingDataforDifficultiesandRegions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,7 +130,11 @@ namespace SA_Walks.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("DifficultyId")
+                    b.Property<string>("Difficulty")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("DifficultyID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("LengthInKm")
@@ -138,7 +144,11 @@ namespace SA_Walks.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("RegionId")
+                    b.Property<string>("Region")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("RegionID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("WalkImageUrl")
@@ -146,30 +156,7 @@ namespace SA_Walks.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DifficultyId");
-
-                    b.HasIndex("RegionId");
-
                     b.ToTable("Walks");
-                });
-
-            modelBuilder.Entity("SA_Walks.API.Models.Domain.Walk", b =>
-                {
-                    b.HasOne("SA_Walks.API.Models.Domain.Difficulty", "Difficulty")
-                        .WithMany()
-                        .HasForeignKey("DifficultyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SA_Walks.API.Models.Domain.Region", "Region")
-                        .WithMany()
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Difficulty");
-
-                    b.Navigation("Region");
                 });
 #pragma warning restore 612, 618
         }
