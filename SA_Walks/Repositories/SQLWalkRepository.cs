@@ -25,9 +25,49 @@ namespace SA_Walks.API.Repositories
         }
 
 
-        public async Task<List<Walk>> GetAllAsync()
+        public async Task<List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null, 
+            string? sortBy = null, bool isAscending = true, int pageNumber=1, int pageSize = 1000)
         {
-            return await dbContext.Walks.Include("Difficulty").Include("Region").ToListAsync();
+            var walks = dbContext.Walks.Include("Difficulty").Include("Region").AsQueryable();
+
+            //Filter the walks based on the filterOn and filterQuery parameters
+            if (string.IsNullOrWhiteSpace(filterOn) == false && string.IsNullOrWhiteSpace(filterQuery) == false)
+            {
+                if (filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    walks = walks.Where(x => x.Name.Contains(filterQuery));
+                }
+                else if (filterOn.Equals("Description", StringComparison.OrdinalIgnoreCase))
+                {
+                    walks = walks.Where(x => x.Description.Contains(filterQuery));
+                }
+            }
+
+            //Sort the walks based on the sortBy and isAscending parameters
+
+            if (string.IsNullOrWhiteSpace(sortBy) == false)
+            {
+                if (sortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    //ternary operator to check if isAscending is true or false
+                    walks = isAscending ? walks.OrderBy(x => x.Name) : walks.OrderByDescending(x => x.Name);
+                }
+                else if (sortBy.Equals("LengthInKm", StringComparison.OrdinalIgnoreCase))
+                {
+                    //ternary operator to check if isAscending is true or false
+                    walks = isAscending ? walks.OrderBy(x => x.LengthInKm) : walks.OrderByDescending(x => x.LengthInKm);
+                }
+            }
+
+            //Paginate the walks based on the pageNumber and pageSize parameters
+            var skipPages = (pageNumber - 1) * pageSize;
+            walks = walks.Skip(skipPages).Take(pageSize);
+
+            //Return the walks as a list
+            return await walks.Skip(skipPages).Take(pageSize).ToListAsync();
+
+
+
         }
 
         public async Task<Walk?> GetByIdAsync(Guid id)

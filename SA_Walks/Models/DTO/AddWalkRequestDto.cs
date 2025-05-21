@@ -12,7 +12,7 @@ namespace SA_Walks.API.Models.DTO
         [MaxLength(1000)]
         public string Description { get; set; }
         [Required]
-        [Range(0,20)]
+        [Range(0,70)]
         public double LengthInKm { get; set; }
         
         public string? WalkImageUrl { get; set; }
