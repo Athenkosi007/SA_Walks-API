@@ -1,5 +1,6 @@
 ﻿
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SA_Walks.API.CustomActionFilters;
@@ -13,6 +14,8 @@ namespace SA_Walks.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize] // Ensure that the user is authenticated
+
     public class RegionsController : ControllerBase
     {
         private readonly SA_WalksDbContext dbContext;

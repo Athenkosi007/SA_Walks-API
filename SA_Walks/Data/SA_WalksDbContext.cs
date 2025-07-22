@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using  Microsoft.EntityFrameworkCore;
 using SA_Walks.API.Models.Domain;
 
 namespace SA_Walks.API.Data
